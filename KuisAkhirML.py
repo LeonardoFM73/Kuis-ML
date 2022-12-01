@@ -34,10 +34,15 @@ def cal_fitness(parent):
         Fit.append(fitness)
     return Fit
 
-def J_Fitness(Fitness):
+def roulete_wheel(Fitness):
+    Persen=[]
     Jfitness=sum(Fitness)
+    for i in range(len(Fitness)):
+        prosen=(Fitness[i]/Jfitness)*100
+        prosen=int(prosen)
+        Persen.append(prosen)
     
-    return Jfitness
+    return Jfitness,Persen
 
 #def roulete_wheel():
     
@@ -46,12 +51,13 @@ def J_Fitness(Fitness):
 def main():
     parent = pop(population,gen_length)
     Fitness = cal_fitness(parent)
-    JFitness = J_Fitness(Fitness)
+    JFitness,Persen = roulete_wheel(Fitness)
     for epoch in range(Epoch):
         print("Populasi ke",epoch+1)
         for i in range(population):
             print("Individu: {}\tKromosom: {}\tFitness Score: {}".format(i+1, parent[i], Fitness[i]))
-        print(JFitness) 
+        print(JFitness)
+        print(Persen) 
 
 
 main()
