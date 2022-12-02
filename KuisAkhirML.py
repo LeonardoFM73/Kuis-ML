@@ -5,7 +5,7 @@ gen = '''ABCDEFGHIJKLMNOPQRSTUVWXYZ'''
 target = "GENETIKA"
 population = 16
 gen_length = 8
-Epoch=100
+Epoch=5
 
 def pop(population,length):
   individu = []
@@ -45,8 +45,40 @@ def roulete_wheel(Fitness):
     return Jfitness,Persen
 
 #def roulete_wheel():
-    
 
+def crossover(gnome):
+    parent=[]
+    child_chromosome=[]
+    for i in range(population):
+
+        if j<16 and i%2==0:
+            j=j+1
+            for gp1,gp2 in zip(gnome[i],gnome[j]):
+                p = random.random()
+        
+                if p <45:
+                    child_chromosome.append(gp1) 
+                elif p<90:
+                    child_chromosome.append(gp2)
+                else:
+                    child_chromosome.append(mutate())   
+        parent=child_chromosome 
+    return parent
+    
+def mutate(parent):
+    global gen
+    gnome=[]
+    for i in range(population):
+        chromosome=[]
+        for gt in zip(parent[i]):
+            p=random.random()
+            if p <45:
+                chromosome.append(gt) 
+            elif p<90:
+                gene = random.choice(gen) 
+                chromosome.append(gene)
+        gnome.append(''.join(''.join(tup) for tup in chromosome))
+    return gnome
 
 def main():
     parent = pop(population,gen_length)
@@ -55,9 +87,11 @@ def main():
     for epoch in range(Epoch):
         print("Populasi ke",epoch+1)
         for i in range(population):
-            print("Individu: {}\tKromosom: {}\tFitness Score: {}".format(i+1, parent[i], Fitness[i]))
-        print(JFitness)
-        print(Persen) 
+            print("Individu: {}\tKromosom: {}\tFitness Score: {}\tProsen Score: {}".format(i+1, parent[i], Fitness[i], Persen[i]))
+        print(JFitness) 
+        parent=mutate(parent)
+        Fitness = cal_fitness(parent)
+        JFitness,Persen = roulete_wheel(Fitness)
 
 
 main()
