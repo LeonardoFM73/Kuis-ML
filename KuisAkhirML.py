@@ -81,17 +81,22 @@ def mutate(parent):
     return gnome
 
 def main():
+    found = False
+    generation=1
     parent = pop(population,gen_length)
     Fitness = cal_fitness(parent)
     JFitness,Persen = roulete_wheel(Fitness)
-    for epoch in range(Epoch):
-        print("Populasi ke",epoch+1)
+    while found is not True or generation<=Epoch:
+        print("Populasi ke",generation)
         for i in range(population):
             print("Individu: {}\tKromosom: {}\tFitness Score: {}\tProsen Score: {}".format(i+1, parent[i], Fitness[i], Persen[i]))
-        print(JFitness) 
+            if Fitness !=260: 
+                found = True
+        print(JFitness)
         parent=mutate(parent)
         Fitness = cal_fitness(parent)
         JFitness,Persen = roulete_wheel(Fitness)
+        generation+=1
 
 
 main()
